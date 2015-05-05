@@ -4,6 +4,8 @@ import pyglet
 from controller import controller
 
 def get_parameters(argv):
+    parameters = {
+        'draw_label': False}
     try:
         opts, args = getopt.getopt(argv, "l", ["label"])
     except getopt.GetoptError:
@@ -11,9 +13,8 @@ def get_parameters(argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-l" or opt == "--label":
-            draw_label = True
-    return {
-        'draw_label': draw_label}
+            parameters['draw_label'] = True
+    return parameters
 
 if __name__ == "__main__":    
     parameters = get_parameters(sys.argv[1:])
