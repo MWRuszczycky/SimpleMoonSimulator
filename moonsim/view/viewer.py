@@ -1,5 +1,6 @@
 import pyglet
 from pyglet import gl
+import resources.indices as ind
 from resources import const
 
 class Viewer():
@@ -13,8 +14,8 @@ class Viewer():
                 viewer will be managing.
         """
         pyglet.gl.glClearColor(*const.MAIN_WIN_CLEAR_CLR)
-        self.arrow = {'vis': False}
-        self.path = {'vis': False}
+        self.arrow = {ind.VIS: False}
+        self.path = {ind.VIS: False}
         self.label = pyglet.text.Label(
             font_name=const.MOON_PAR_LBL_FONT,
             color=const.MOON_PAR_LBL_PS_CLR,
@@ -54,18 +55,18 @@ class Viewer():
         gl.glLoadIdentity()
 
         # Draw all the objects.
-        if self.arrow['vis'] == True:
-            gl.glTranslatef(self.arrow['loc'].x, self.arrow['loc'].y, 0)
-            gl.glRotatef(self.arrow['ang'], 0, 0, 1)
-            pyglet.graphics.draw(self.arrow['numv'], gl.GL_TRIANGLE_FAN,
-                ("v2f", self.arrow['ver']), ("c4f", self.arrow['clr']))
+        if self.arrow[ind.VIS] == True:
+            gl.glTranslatef(self.arrow[ind.LOC].x, self.arrow[ind.LOC].y, 0)
+            gl.glRotatef(self.arrow[ind.ANG], 0, 0, 1)
+            pyglet.graphics.draw(self.arrow[ind.NMV], gl.GL_TRIANGLE_FAN,
+                ("v2f", self.arrow[ind.VER]), ("c4f", self.arrow[ind.CLR]))
             gl.glLoadIdentity()
-            self.arrow['vis'] = False
-        if self.path['vis'] == True:
-            pyglet.graphics.draw(self.path['numv'], gl.GL_LINE_STRIP,
-                ("v2f", self.path['ver']), ("c4f", self.path['clr']))
+            self.arrow[ind.VIS] = False
+        if self.path[ind.VIS] == True:
+            pyglet.graphics.draw(self.path[ind.NMV], gl.GL_LINE_STRIP,
+                ("v2f", self.path[ind.VER]), ("c4f", self.path[ind.CLR]))
             gl.glLoadIdentity()
-            self.path['vis'] = False
+            self.path[ind.VIS] = False
         graphics_batch.draw()
         if self.show_label:
             self.label.draw()
@@ -85,11 +86,11 @@ class Viewer():
         required for openGL painting and sets the visibility of the
         arrow to True.
         """
-        self.arrow['vis'] = True
-        self.arrow['ver'], self.arrow['numv'] = moon.get_velocity_arrow()
-        self.arrow['loc'] = moon.locus
-        self.arrow['ang'] = moon.velocity.angle_deg()
-        self.arrow['clr'] = const.MOON_ARROW_CLR * self.arrow['numv']
+        self.arrow[ind.VIS] = True
+        self.arrow[ind.VER], self.arrow[ind.NMV] = moon.get_velocity_arrow()
+        self.arrow[ind.LOC] = moon.locus
+        self.arrow[ind.ANG] = moon.velocity.angle_deg()
+        self.arrow[ind.CLR] = const.MOON_ARROW_CLR * self.arrow[ind.NMV]
 
     def render_path(self, moon):
         """Renders path traveled by moon in current simulation.
@@ -109,10 +110,10 @@ class Viewer():
         num_ver = len(moon.path) // 2
         for x in range(1, num_ver + 1):
             colors.extend(const.MOON_PATH_CLR[:3] + (x / num_ver,))
-        self.path['vis'] = True
-        self.path['ver'] = tuple(moon.path)
-        self.path['numv'] = num_ver
-        self.path['clr'] = tuple(colors)
+        self.path[ind.VIS] = True
+        self.path[ind.VER] = tuple(moon.path)
+        self.path[ind.NMV] = num_ver
+        self.path[ind.CLR] = tuple(colors)
         
     def render_label(self, energy, moon, fps, state, mode):
         """Renders the data label for the simulation.
@@ -133,14 +134,14 @@ class Viewer():
         to True.
         """
         self.label.text = const.MOON_PAR_LBL_STRING.format(
-            energy['total'], energy['kinetic'], energy['potential'],
+            energy[ind.TOTAL], energy[ind.KINETIC], energy[ind.POTENTIAL],
             moon.locus.x, moon.locus.y,
             moon.velocity.x, moon.velocity.y, fps)
         self.label.color = {
-            'running': const.MOON_PAR_LBL_RUN_CLR,
-            'paused': const.MOON_PAR_LBL_PS_CLR,
-            'stopped': const.MOON_PAR_LBL_PS_CLR}[state]
-        if mode in ['moving_moon', 'moving_arrow']:
+            ind.RUNNING: const.MOON_PAR_LBL_RUN_CLR,
+            ind.PAUSED: const.MOON_PAR_LBL_PS_CLR,
+            ind.STOPPED: const.MOON_PAR_LBL_PS_CLR}[state]
+        if mode in [ind.MOVE_MOON, ind.MOVE_ARROW]:
             self.label.color = const.MOON_PAR_LBL_MOVE_CLR
         if moon.crashed:
             self.label.color = const.MOON_PAR_LBL_CRASH_CLR

@@ -1,5 +1,6 @@
 import pyglet
 import model
+import resources.indices as ind
 
 class Player():
     """Manages the simulation animation player."""
@@ -17,16 +18,16 @@ class Player():
             y (int): y-position of control set.
         """
         self.images = {
-            'start' : start_img,
-            'pause' : pause_img,
-            'stop'  : stop_img,
-            'reset' : reset_img}
+            ind.START_BTN : start_img,
+            ind.PAUSE_BTN : pause_img,
+            ind.STOP_BTN  : stop_img,
+            ind.RESET_BTN : reset_img}
         self.play_btn = pyglet.sprite.Sprite(
-            img=self.images['start'], batch=batch)
+            img=self.images[ind.START_BTN], batch=batch)
         self.stop_btn = pyglet.sprite.Sprite(
-            img=self.images['stop'], batch=batch)
+            img=self.images[ind.STOP_BTN], batch=batch)
         self.reset_btn = pyglet.sprite.Sprite(
-            img=self.images['reset'], batch=batch)
+            img=self.images[ind.RESET_BTN], batch=batch)
         self.x = x
         self.y = y
 
@@ -74,19 +75,19 @@ class Player():
 
     def play(self):
         """Indicate that the simulation is running."""
-        self.play_btn.image = self.images['pause']
+        self.play_btn.image = self.images[ind.PAUSE_BTN]
 
     def pause(self):
         """Indicate that the simulation is paused."""
-        self.play_btn.image = self.images['start']
+        self.play_btn.image = self.images[ind.START_BTN]
 
     def stop(self):
         """Indicate that the simulation is stopped."""
-        self.play_btn.image = self.images['start']
+        self.play_btn.image = self.images[ind.START_BTN]
 
     def reset(self):
         """Indicate that the simulation has been reset."""
-        self.play_btn.image = self.images['start']
+        self.play_btn.image = self.images[ind.START_BTN]
 
     @property
     def x(self):

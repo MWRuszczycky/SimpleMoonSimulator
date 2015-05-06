@@ -1,6 +1,7 @@
 import math
 import pyglet
 import model
+import resources.indices as ind
 from model.engine import Vector, Rect
 from resources import const
 
@@ -186,9 +187,9 @@ class Moon(pyglet.sprite.Sprite):
         than take a click event on the moon and its velocity arrow
         and decompose it depending on whether the click was on the
         arrow or the moon itself."""
-        if info == 'moon':
+        if info == ind.MOON:
             self.sig_moon_clicked(x, y)
-        elif info == 'arrow':
+        elif info == ind.ARROW:
             self.sig_arrow_clicked(x, y)
 
     def __adjust_position(self):

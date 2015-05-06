@@ -1,5 +1,6 @@
 import math
 import pyglet
+import resources.indices as ind
 
 #######################################
 # Core Classes.
@@ -97,9 +98,9 @@ def energy(moon, planets, gravity=0):
         gravity (float): Gravity constant.
 
     Returns: dict
-        'total' (float): Calculated total energy of the moon.
-        'kinetic' (float): Calculated kinetic energy of the moon.
-        'potential' (float): Calculated potential energy of the moon.
+        ind.TOTAL (float): Total energy of the moon.
+        ind.KINETIC (float): Kinetic energy of the moon.
+        ind.POTENTIAL (float): Potential energy of the moon.
     """
     pe = 0
     for planet in planets:
@@ -108,7 +109,7 @@ def energy(moon, planets, gravity=0):
             pe -= gravity * planet.mass / r.mag()
     ke = moon.mass * (moon.velocity.mag() ** 2) / 2 
     te = ke + pe
-    return {'total': te, 'kinetic': ke, 'potential': pe}
+    return {ind.TOTAL: te, ind.KINETIC: ke, ind.POTENTIAL: pe}
 
 def update(dt, moon, planets, gravity=0):
     """Updates the current postion and velocity of the moon.
