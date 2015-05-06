@@ -8,7 +8,7 @@ from resources import const
 class Moon(pyglet.sprite.Sprite):
     """Manages the moon object for the simulation."""
 
-    def __init__(self, images, locus, velocity, mass=1,
+    def __init__(self, images, locus, velocity, mass=const.MOON_MASS,
                  batch=None, path_segment=5, path_length=200):
         """Initialization.
         Args:

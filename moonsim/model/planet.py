@@ -1,11 +1,12 @@
 import math
 import pyglet
 from model.engine import Vector
+from resources import const
 
 class Planet(pyglet.sprite.Sprite):
     """Manages the planet object."""
 
-    def __init__(self, img, locus, mass=1, batch=None):
+    def __init__(self, img, locus, mass=const.PLANET_MASS, batch=None):
         """Initialization.
         Args:
             img (image): Sprite graphic for the planet.
