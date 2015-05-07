@@ -1,7 +1,7 @@
 import sys
 import getopt
 import resources.indices as ind
-from resources import const
+from resources import const, license
 
 def show_start():
     sys.stdout.write("Start Screen\n")
@@ -10,7 +10,7 @@ def show_help():
     sys.stdout.write("Help Screen\n")
 
 def show_license():
-    sys.stdout.write("License\n")
+    sys.stdout.write(license.text)
 
 def assign_args(par, args):
     if len(args) != 2:
