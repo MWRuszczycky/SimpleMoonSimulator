@@ -1,5 +1,12 @@
 # Startup parameters indices.
-DRAW_LABEL =        1001
+RUN_SIM =           1000 # Run simulation flag.
+DISP_PAR =          1001 # Display moon simulation parameters flag.
+INIT_LOCX =         1002 # Initial x-coordinate of moon.
+INIT_LOCY =         1003 # Initial y-coordinate of moon.
+INIT_VELX =         1004 # Initial x-velocity of moon.
+INIT_VELY =         1005 # Initial y-velocity of moon.
+WIN_WIDTH =         1007 # Main window width.
+WIN_HEIGHT =        1006 # Main window height.
 
 # Object identifiers.
 MOON =              2000 # Body of moon.
@@ -9,7 +16,6 @@ START_BTN =         2100 # Start button on simulation player.
 PAUSE_BTN =         2101 # Pause button on simulation player.
 STOP_BTN =          2102 # Stop button on simulation player.
 RESET_BTN =         2103 # Reset button on simulation player.
-
 
 # Simulation states.
 RUNNING =           3000

@@ -2,33 +2,57 @@
 # Main window parameters.
 
 # Main window default dimensions.
-MAIN_WIN_WIDTH = 1200
-MAIN_WIN_HEIGHT = 1000
+MAIN_WIN_WIDTH = 800
+MAIN_WIN_HEIGHT = 800
+# Maximum and minimum window dimensions.
+MAIN_WIN_MAXX = 1200
+MAIN_WIN_MAXY = 1000
+MAIN_WIN_MINX = 200
+MAIN_WIN_MINY = 200
 # Main window title.
-MAIN_WIN_TITLE = "Moon Simulation"
+MAIN_WIN_TITLE = "A Simple Moon Simulator"
 # Screen clear color.
 MAIN_WIN_CLEAR_CLR = (0, 0, 0, 255)
+
+#######################################
+# Startup argument list.
+
+STARTUP_LONG = [
+    "display",
+    "perigee",
+    "apogee",
+    "license",
+    "help"]
+
+STARTUP_SHORT = "dpalh"
 
 #######################################
 # Initial parameters for the planet.
 
 # Location.
-PLANET_INIT_LOCX = 600
-PLANET_INIT_LOCY = 500
+PLANET_INIT_LOCX = MAIN_WIN_WIDTH / 2
+PLANET_INIT_LOCY = MAIN_WIN_HEIGHT / 2
 # Mass.
 PLANET_MASS = 81.348            # Moon masses.
 
 #######################################
 # Parameters for the moon.
 
-# Initial location (perigee).
-MOON_INIT_LOCX = 357.80         # px
-MOON_INIT_LOCY = 500            # px
 # Mass.
 MOON_MASS = 1
-# Initial velocity.
-MOON_INIT_VELX = 0              # px/s
-MOON_INIT_VELY = 25.824         # px/s
+# Initial location (perigee).
+MOON_PER_LOCX = MAIN_WIN_WIDTH / 2 - 242.20     # px
+MOON_PER_LOCY = MAIN_WIN_HEIGHT / 2             # px
+# Initial velocity (perigee).
+MOON_PER_VELX = 0               # px/s
+MOON_PER_VELY = 25.824          # px/s
+# Initial location (apogee).
+MOON_APO_LOCX = MAIN_WIN_WIDTH / 2 + 270.33     # px
+MOON_APO_LOCY = MAIN_WIN_HEIGHT / 2
+# Initial velocity (apogee).
+MOON_APO_VELX = 0               # px/s
+MOON_APO_VELY = -23.136         # px/s
+
 # Moon tail path color.
 MOON_PATH_CLR = (0.89, 0.80, 0.45, 1.0)
 # Moon velocity arrow color.
@@ -83,3 +107,20 @@ MOON_PAR_LBL_MOVE_CLR = (73, 191, 172, 255)     # user changing moon
 FRAME_RATE = 60     # frames per second
 # Frame interval subdivision for numerical integration.
 FRAME_DIVS = 100
+
+#######################################
+# Strings: Error messages.
+
+# Message when unrecognized command used at startup.
+BADCMDMSG_STR = "\
+Unrecognized command (see 'moonsim -h').\n"
+# Message when unrecognized arguments used at startup.
+BADARGMSG_STR = "\
+Unrecognized arguments (see 'moonsim -h').\n"
+# Message when improper window dimensions requested.
+BADWINDIMMSG_STR = "\
+Bad window dimensions:\n\
+    {minwidth:d} < width < {maxwidth:d}\
+    {minheight:d} < height < {maxheight:d}\n".format(
+    minwidth=MAIN_WIN_MINX - 1, maxwidth=MAIN_WIN_MAXX + 1,
+    minheight=MAIN_WIN_MINY - 1, maxheight=MAIN_WIN_MAXY + 1)

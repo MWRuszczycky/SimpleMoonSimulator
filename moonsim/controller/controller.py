@@ -11,29 +11,33 @@ from resources import const
 class Controller(pyglet.window.Window):
     """Manages the simulation, window and events."""
 
-    def __init__(self, draw_label=False):
+    def __init__(self,
+        disp_par=False,
+        moon_locx=const.MOON_PER_LOCX, moon_locy=const.MOON_PER_LOCY,
+        moon_velx=const.MOON_PER_VELX, moon_vely=const.MOON_PER_VELY,
+        win_width=const.MAIN_WIN_WIDTH, win_height=const.MAIN_WIN_HEIGHT):
         """Initialization.
 
         Args:
-            draw_label (bool): Flag for whether the simulation
+            disp_par (bool): Flag for whether the simulation
                 label should be drawn.
         """
         config = pyglet.gl.Config(
             double_buffer=True, sample_buffers=1, samples=4)
         super().__init__(
-            width=const.MAIN_WIN_WIDTH,
-            height=const.MAIN_WIN_HEIGHT,
+            width=win_width,
+            height=win_height,
             caption=const.MAIN_WIN_TITLE,
             config=config)
         # Initialize the simulation master data object.
         self.simstate = ind.STOPPED
         self.simmode = ind.READY
-        self.simoptions = {ind.DRAW_LABEL: draw_label}
+        self.simoptions = {ind.DISP_PAR: disp_par}
         self.resets = {
-            ind.INIT_LOC: Vector(const.MOON_INIT_LOCX, const.MOON_INIT_LOCY),
-            ind.INIT_VEL: Vector(const.MOON_INIT_VELX, const.MOON_INIT_VELY),
-            ind.LAST_LOC: Vector(const.MOON_INIT_LOCX, const.MOON_INIT_LOCY),
-            ind.LAST_VEL: Vector(const.MOON_INIT_VELX, const.MOON_INIT_VELY)}
+            ind.INIT_LOC: Vector(moon_locx, moon_locy),
+            ind.INIT_VEL: Vector(moon_velx, moon_vely),
+            ind.LAST_LOC: Vector(moon_locx, moon_locy),
+            ind.LAST_VEL: Vector(moon_velx, moon_vely)}
 
         # Initialize the simulation objects and the graphics batch.
         self.graphics_batch = pyglet.graphics.Batch()
@@ -46,8 +50,8 @@ class Controller(pyglet.window.Window):
 
         self.moon = model.moon.Moon(
             images=[resources.images.moon, resources.images.crash_animation],
-            locus=Vector(const.MOON_INIT_LOCX, const.MOON_INIT_LOCY),
-            velocity=Vector(const.MOON_INIT_VELX, const.MOON_INIT_VELY),
+            locus=Vector(moon_locx, moon_locy),
+            velocity=Vector(moon_velx, moon_vely),
             batch=self.graphics_batch)
 
         self.player = model.player.Player(
@@ -55,8 +59,8 @@ class Controller(pyglet.window.Window):
             pause_img=resources.images.pause_button,
             stop_img=resources.images.stop_button,
             reset_img=resources.images.reset_button,
-            x=const.MAIN_WIN_WIDTH,
-            y=const.MAIN_WIN_HEIGHT,
+            x=win_width,
+            y=win_height,
             batch=self.graphics_batch)
         self.player.x -= self.player.width
         self.player.y -= self.player.height
@@ -78,7 +82,7 @@ class Controller(pyglet.window.Window):
         self.viewer.render_path(self.moon)
         energy = model.engine.energy(
             self.moon, self.planets, gravity=const.GRAVITY)
-        if self.simoptions[ind.DRAW_LABEL]:
+        if self.simoptions[ind.DISP_PAR]:
             self.viewer.render_label(
                 energy, self.moon, pyglet.clock.get_fps(),
                 self.simstate, self.simmode)

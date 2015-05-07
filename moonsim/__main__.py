@@ -1,23 +1,18 @@
 import sys
-import getopt
 import pyglet
 import resources.indices as ind
-from controller import controller
+from controller import controller, startup
 
-def get_parameters(argv):
-    parameters = {
-        ind.DRAW_LABEL: False}
-    try:
-        opts, args = getopt.getopt(argv, "l", ["label"])
-    except getopt.GetoptError:
-        sys.stderr.write("bad usage\n")
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == "-l" or opt == "--label":
-            parameters[ind.DRAW_LABEL] = True
-    return parameters
-
-if __name__ == "__main__":    
-    parameters = get_parameters(sys.argv[1:])
-    simulation = controller.Controller(draw_label=parameters[ind.DRAW_LABEL])
+parameters = startup.get_parameters(sys.argv[1:])
+if parameters[ind.RUN_SIM]:
+    simulation = controller.Controller(
+        disp_par=parameters[ind.DISP_PAR],
+        moon_locx=parameters[ind.INIT_LOCX],
+        moon_locy=parameters[ind.INIT_LOCY],
+        moon_velx=parameters[ind.INIT_VELX],
+        moon_vely=parameters[ind.INIT_VELY],
+        win_width=parameters[ind.WIN_WIDTH],
+        win_height=parameters[ind.WIN_HEIGHT])
     pyglet.app.run()
+else:
+    sys.exit(0)
