@@ -65,6 +65,8 @@ class Controller(pyglet.window.Window):
         self.player.x -= self.player.width
         self.player.y -= self.player.height
 
+        self.run_time = 0
+
         # Initialize the viewer.
         self.viewer = view.viewer.Viewer(self)
 
@@ -85,7 +87,7 @@ class Controller(pyglet.window.Window):
         if self.simoptions[ind.DISP_PAR]:
             self.viewer.render_label(
                 energy, self.moon, pyglet.clock.get_fps(),
-                self.simstate, self.simmode)
+                self.simstate, self.simmode, self.run_time)
         self.viewer.paint(self, self.graphics_batch)
 
     def on_mouse_press(self, x, y, button, modifiers):
@@ -130,9 +132,14 @@ class Controller(pyglet.window.Window):
             Nothing.
 
         This method is scheduled via Pyglet when the simulation is
-        running, and unscheduled when not.
+        running, and unscheduled when not. The run time is also
+        update in units of simulation seconds. If the run time is
+        greater than 1 year in real time, it is reset to 0.
         """
         subdt = dt / const.FRAME_DIVS
+        self.run_time += dt
+        if self.run_time > const.SIMSEC_PER_YEAR:
+            self.run_time = 0
         for step in range(0, const.FRAME_DIVS):
             model.engine.update(
                 subdt, self.moon, self.planets, gravity=const.GRAVITY)
@@ -169,6 +176,7 @@ class Controller(pyglet.window.Window):
         self.player.stop()
         self.simmode = ind.READY
         self.moon.reset(self.resets[ind.INIT_LOC], self.resets[ind.INIT_VEL])
+        self.run_time = 0
 
     def reset_sim(self):
         """Stops simulation and resets moon to last start state.
@@ -184,6 +192,7 @@ class Controller(pyglet.window.Window):
         self.player.reset()
         self.simmode = ind.READY
         self.moon.reset(self.resets[ind.LAST_LOC], self.resets[ind.LAST_VEL])
+        self.run_time = 0
 
     def move_moon(self, x, y):
         """Repositions the moon based on bouse input.
@@ -198,6 +207,7 @@ class Controller(pyglet.window.Window):
         if self.simstate in [ind.PAUSED, ind.STOPPED] and not self.moon.crashed:
             self.simmode = ind.MOVE_MOON
             self.moon.reset(locus=Vector(x, y))
+            self.run_time = 0
 
     def move_arrow(self, x, y):
         """Changes the velocity of the moon  based on mouse input.
@@ -218,6 +228,7 @@ class Controller(pyglet.window.Window):
             mouse_abs = Vector(x, y)
             mouse_rel = mouse_abs - self.moon.locus
             self.moon.change_velocity(mouse_rel)
+            self.run_time = 0
 
 #######################################
 # Generic methods.

@@ -81,21 +81,26 @@ GRAVITY = 1881.6  # (px)^3 * (moon mass)^(-1) * (simulation sec)^(-2)
 # Distance conversion: 1500 kilometers per pixel.
 KM_PER_PX = 1500
 # Time conversion: 10 hours (36000 seconds) per second of simulation.
-HR_PER_SEC = 10
+HR_PER_SIMSEC = 10
+DAY_PER_SIMSEC = HR_PER_SIMSEC / 24
+SIMSEC_PER_YEAR = 365.25 / DAY_PER_SIMSEC
+# Energy.
+TJ_PER_SIMENERGY = 1.2747e14
 
 #######################################
 # Screen label for moon parameters.
 
 # Format string.
 MOON_PAR_LBL_STRING ="\
-TE: {:10.1f}\n\
-KE: {:10.1f}\n\
-PE: {:10.1f}\n\
-x: {:11.1f}\n\
-y: {:11.1f}\n\
-dx/dt: {:7.1f}\n\
-dy/dt: {:7.1f}\n\
-FPS: {:9.1f}"
+t: {:14.1f} days\n\
+TE: {:+13.3e} TJ\n\
+KE: {:+13.3e} TJ\n\
+PE: {:+13.3e} TJ\n\
+r: {:+14.3e} km\n\
+speed: {:+10.3e} km/h\n\
+dx/dt: {:+7.3e} km/h\n\
+dy/dt: {:+7.3e} km/h\n\
+FPS: {:12.1f} fps"
 MOON_PAR_LBL_LOCX = 5
 MOON_PAR_LBL_LOCY = 5
 MOON_PAR_LBL_WIDTH = 200

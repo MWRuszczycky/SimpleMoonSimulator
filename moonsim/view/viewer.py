@@ -1,5 +1,6 @@
 import pyglet
 from pyglet import gl
+from model.engine import Vector
 import resources.indices as ind
 from resources import const
 
@@ -115,8 +116,9 @@ class Viewer():
         self.path[ind.NMV] = num_ver
         self.path[ind.CLR] = tuple(colors)
         
-    def render_label(self, energy, moon, fps, state, mode):
-        """Renders the data label for the simulation.
+    def render_label(self,
+        energy, moon, fps, state, mode, run_time, origin=Vector(0,0)):
+        """Renders the data label for the simulation parameters.
             
         Args:
             energy (dict of float): Contains the energy parameters.
@@ -124,6 +126,9 @@ class Viewer():
             fps (float): Current frames per second.
             state (string): Current state of the simulation.
             mode (string): Current mode of the simulation.
+            run_time (float): Current run time of the simulation (s).
+            origin (Vector): Location from which to calculate the
+                radial distance of the moon.
 
         Returns:
             Nothing.
@@ -131,12 +136,27 @@ class Viewer():
         Uses the MOON_PAR_LBL_STRING to format the parameters. The
         color is set based on the simulation state, mode and whether
         the moon has crashed or not. Sets the visibility of the label
-        to True.
+        to True. Values are converted from simulation to real units.
         """
+        # Unit conversions.
+        vel_conv = const.KM_PER_PX / const.HR_PER_SIMSEC
+        speed = moon.velocity.mag() * vel_conv
+        velx = moon.velocity.x * vel_conv
+        vely = moon.velocity.y * vel_conv
+
+        run_days = run_time * const.DAY_PER_SIMSEC
+
+        radial_dist = (moon.locus - origin).mag() * const.KM_PER_PX
+
+        total_energy = energy[ind.TOTAL] * const.TJ_PER_SIMENERGY
+        kinetic_energy = energy[ind.KINETIC] * const.TJ_PER_SIMENERGY
+        potential_energy = energy[ind.POTENTIAL] * const.TJ_PER_SIMENERGY
+
+        # Render the label.
         self.label.text = const.MOON_PAR_LBL_STRING.format(
-            energy[ind.TOTAL], energy[ind.KINETIC], energy[ind.POTENTIAL],
-            moon.locus.x, moon.locus.y,
-            moon.velocity.x, moon.velocity.y, fps)
+            run_days,
+            total_energy, kinetic_energy, potential_energy,
+            radial_dist, speed, velx, vely, fps)
         self.label.color = {
             ind.RUNNING: const.MOON_PAR_LBL_RUN_CLR,
             ind.PAUSED: const.MOON_PAR_LBL_PS_CLR,
