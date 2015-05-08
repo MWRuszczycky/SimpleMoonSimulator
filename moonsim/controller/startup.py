@@ -1,16 +1,16 @@
 import sys
 import getopt
 import resources.indices as ind
-from resources import const, license
+from resources import const, license, help_screen
 
-def show_start():
-    sys.stdout.write("Start Screen\n")
+def show_version():
+    sys.stdout.write(const.VERSION)
 
 def show_help():
-    sys.stdout.write("Help Screen\n")
+    sys.stdout.write(help_screen.TEXT)
 
 def show_license():
-    sys.stdout.write(license.text)
+    sys.stdout.write(license.TEXT)
 
 def assign_args(par, args):
     if len(args) != 2:
@@ -42,6 +42,9 @@ def get_parameters(argv):
         if len(args) > 0:
             assign_args(parameters, args)
         for opt, arg in opts:
+            if opt == "--version":
+                show_version()
+                parameters[ind.RUN_SIM] = False
             if opt in ["-h", "--help"]:
                 show_help()
                 parameters[ind.RUN_SIM] = False

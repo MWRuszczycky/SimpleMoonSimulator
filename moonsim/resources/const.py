@@ -1,4 +1,9 @@
 #######################################
+# Version.
+
+VERSION = "moonsim 0.1.0\n"
+
+#######################################
 # Main window parameters.
 
 # Main window default dimensions.
@@ -18,6 +23,7 @@ MAIN_WIN_CLEAR_CLR = (0, 0, 0, 255)
 # Startup argument list.
 
 STARTUP_LONG = [
+    "version",
     "display",
     "perigee",
     "apogee",

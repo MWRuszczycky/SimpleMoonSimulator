@@ -1,4 +1,4 @@
-text = "\
+TEXT = "\
 Copyright (c) 2015, Mark Walter Ruszczycky\n\
 All rights reserved.\n\
 \n\
