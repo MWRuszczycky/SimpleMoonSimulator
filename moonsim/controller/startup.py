@@ -30,8 +30,10 @@ def get_parameters(argv):
     parameters = {
         ind.RUN_SIM: True,
         ind.DISP_PAR: False,
-        ind.INIT_LOCX: const.MOON_PER_LOCX,
-        ind.INIT_LOCY: const.MOON_PER_LOCY,
+        ind.INIT_PLANET_LOCX: const.DEL_PLANET_INIT_LOCX,
+        ind.INIT_PLANET_LOCY: const.DEL_PLANET_INIT_LOCY,
+        ind.INIT_MOON_LOCX: const.DEL_MOON_PER_LOCX,
+        ind.INIT_MOON_LOCY: const.DEL_MOON_PER_LOCY,
         ind.INIT_VELX: const.MOON_PER_VELX,
         ind.INIT_VELY: const.MOON_PER_VELY,
         ind.WIN_WIDTH: const.MAIN_WIN_WIDTH,
@@ -57,10 +59,14 @@ def get_parameters(argv):
                 # This is the current default.
                 pass
             elif opt in ["-a", "--apogee"]:
-                parameters[ind.INIT_LOCX] = const.MOON_APO_LOCX
-                parameters[ind.INIT_LOCY] = const.MOON_APO_LOCY
+                parameters[ind.INIT_MOON_LOCX] = const.DEL_MOON_APO_LOCX
+                parameters[ind.INIT_MOON_LOCY] = const.DEL_MOON_APO_LOCY
                 parameters[ind.INIT_VELX] = const.MOON_APO_VELX
                 parameters[ind.INIT_VELY] = const.MOON_APO_VELY
+        parameters[ind.INIT_MOON_LOCX] += parameters[ind.WIN_WIDTH] / 2
+        parameters[ind.INIT_MOON_LOCY] += parameters[ind.WIN_HEIGHT] / 2
+        parameters[ind.INIT_PLANET_LOCX] += parameters[ind.WIN_WIDTH] / 2
+        parameters[ind.INIT_PLANET_LOCY] += parameters[ind.WIN_HEIGHT] / 2
         return parameters
     except getopt.GetoptError:
         sys.stderr.write(const.BADCMDMSG_STR)

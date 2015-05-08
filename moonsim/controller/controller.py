@@ -13,8 +13,8 @@ class Controller(pyglet.window.Window):
 
     def __init__(self,
         disp_par=False,
-        moon_locx=const.MOON_PER_LOCX, moon_locy=const.MOON_PER_LOCY,
-        moon_velx=const.MOON_PER_VELX, moon_vely=const.MOON_PER_VELY,
+        planet_locx=0, planet_locy=0,
+        moon_locx=0, moon_locy=0, moon_velx=0, moon_vely=0,
         win_width=const.MAIN_WIN_WIDTH, win_height=const.MAIN_WIN_HEIGHT):
         """Initialization.
 
@@ -45,7 +45,7 @@ class Controller(pyglet.window.Window):
         self.planets.append(
             model.planet.Planet(
                 resources.images.planet,
-                locus=Vector(const.PLANET_INIT_LOCX, const.PLANET_INIT_LOCY),
+                locus=Vector(planet_locx, planet_locy),
                 batch=self.graphics_batch))
 
         self.moon = model.moon.Moon(

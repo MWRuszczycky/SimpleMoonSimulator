@@ -36,8 +36,8 @@ STARTUP_SHORT = "dpalh"
 # Initial parameters for the planet.
 
 # Location.
-PLANET_INIT_LOCX = MAIN_WIN_WIDTH / 2
-PLANET_INIT_LOCY = MAIN_WIN_HEIGHT / 2
+DEL_PLANET_INIT_LOCX = 0
+DEL_PLANET_INIT_LOCY = 0
 # Mass.
 PLANET_MASS = 81.348            # Moon masses.
 
@@ -47,14 +47,14 @@ PLANET_MASS = 81.348            # Moon masses.
 # Mass.
 MOON_MASS = 1
 # Initial location (perigee).
-MOON_PER_LOCX = MAIN_WIN_WIDTH / 2 - 242.20     # px
-MOON_PER_LOCY = MAIN_WIN_HEIGHT / 2             # px
+DEL_MOON_PER_LOCX = - 242.20    # px
+DEL_MOON_PER_LOCY = 0           # px
 # Initial velocity (perigee).
 MOON_PER_VELX = 0               # px/s
 MOON_PER_VELY = 25.824          # px/s
 # Initial location (apogee).
-MOON_APO_LOCX = MAIN_WIN_WIDTH / 2 + 270.33     # px
-MOON_APO_LOCY = MAIN_WIN_HEIGHT / 2
+DEL_MOON_APO_LOCX = 270.33      # px
+DEL_MOON_APO_LOCY = 0           # px
 # Initial velocity (apogee).
 MOON_APO_VELX = 0               # px/s
 MOON_APO_VELY = -23.136         # px/s
