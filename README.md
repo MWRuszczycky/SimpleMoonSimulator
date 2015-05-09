@@ -20,11 +20,11 @@ The trajectory of the moon follows the reciprocal square law of gravitation usin
 
 ### Installation
 
-Clone the repository to a convenient location. Open a terminal in the repository directory containing the `moonsim` directory and run the simulation with `python moonsim [options]`. The program depends on only Pyglet and the Python standard library.
+Clone the repository to a convenient location. Open a terminal in the repository directory containing the `moonsim` subdirectory and start the program with `python moonsim [options]`. The program depends on only Pyglet and the Python standard library.
 
 ### Running the simulation
 
-The simulation is run using `python moonsim [options]`. The simulation defaults to the position and velocity of perigee (for the Moon-Earth system); however, you can start at apogee using the `-a, --apogee` option at startup. Use the `-d, --display` option to see the physical parameters. When the simulation is paused or stopped you can move the moon with the mouse and change its velocity using the green velocity arrow. To run the simulation, click the play button. The stop button ends the simulation and returns the moon to its startup position and velocity. The pause button stops the simulation and retains the current velocity and position. The reset button returns the moon to the last position and velocity set by the user. If the moon collides with the planet, it explodes (use the stop or reset buttons to get it back).
+The program is started using `python moonsim [options]` at the terminal. The simulation defaults to the position and velocity of perigee (for the Moon-Earth system); however, you can start at apogee using the `-a, --apogee` option at startup. Use the `-d, --display` option to see the physical parameters. When the simulation is paused or stopped, you can move the moon with the mouse and change its velocity using the green velocity arrow. To run the simulation, click the play button. The stop button ends the simulation and returns the moon to its startup position and velocity. The pause button stops the simulation and retains the current velocity and position. The reset button returns the moon to the last position and velocity set by the user. If the moon collides with the planet, it explodes (use the stop or reset buttons to get it back).
 
 Currently the simulation window is not resizable and defaults to 800 &#x00d7; 800 px. However, you can set the window dimensions at startup. For example,
 ```
