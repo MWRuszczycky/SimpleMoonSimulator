@@ -135,3 +135,5 @@ Bad window dimensions:\n\
     {minheight:d} < height < {maxheight:d}\n".format(
     minwidth=MAIN_WIN_MINX - 1, maxwidth=MAIN_WIN_MAXX + 1,
     minheight=MAIN_WIN_MINY - 1, maxheight=MAIN_WIN_MAXY + 1)
+# Error message when image resources cannot be found.
+BADIMGRES_STR = "Cannot load image resources.\n"
