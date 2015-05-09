@@ -87,7 +87,8 @@ class Controller(pyglet.window.Window):
         if self.simoptions[ind.DISP_PAR]:
             self.viewer.render_label(
                 energy, self.moon, pyglet.clock.get_fps(),
-                self.simstate, self.simmode, self.run_time)
+                self.simstate, self.simmode,
+                self.run_time, self.planets[0].locus)
         self.viewer.paint(self, self.graphics_batch)
 
     def on_mouse_press(self, x, y, button, modifiers):
